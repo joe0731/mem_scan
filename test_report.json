@@ -1,0 +1,14 @@
+{
+  "execution_time": 2.097217559814453,
+  "return_code": 0,
+  "memory_usage": {
+    "gpu_peak_gb": 5.02,
+    "gpu_min_gb": 5.02,
+    "gpu_avg_gb": 5.02,
+    "host_peak_gb": 57.62,
+    "host_min_gb": 57.59,
+    "host_avg_gb": 57.6
+  },
+  "command": "python -c import time; print('Testing with report...'); time.sleep(2); print('Done!')",
+  "timestamp": "2025-07-25 06:56:52"
+}
