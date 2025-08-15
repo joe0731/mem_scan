@@ -1,94 +1,77 @@
-以下是 mem-scan 工具的中英文双语简介、安装与用法说明，专为系统与 GPU 内存监控优化内容编排：
-
 # mem-scan
-
-一个用于监控系统和 GPU 内存使用情况的命令行工具，特别适用于监控 Python 程序执行期间的内存特征。
 
 A command-line tool for monitoring system and GPU memory usage, especially suited for observing memory behavior while running Python programs.
 
-## 功能特性 Features
+## Features
 
-- **实时监控 CPU 内存和 GPU 内存使用情况**  
-  Real-time monitoring of CPU and GPU memory usage
+- **Real-time monitoring of CPU and GPU memory usage**
+- **Can monitor the execution of any command**
+- **Reports peak, minimum, and average memory usage statistics**
+- **Can export reports in JSON format**
+- **Configurable monitoring interval and GPU selection**
+- **Quiet mode supported**
 
-- **支持监控任意命令的执行过程**  
-  Can monitor the execution of any command
+## Installation
 
-- **提供峰值、最小值和平均值统计**  
-  Reports peak, minimum, and average memory usage statistics
-
-- **支持将报告保存为 JSON 格式**  
-  Can export reports in JSON format
-
-- **可配置监控间隔和 GPU 设备**  
-  Configurable monitoring interval and GPU selection
-
-- **支持静默模式执行**  
-  Quiet mode supported
-
-## 安装 Installation
-
-### 使用 uv 安装（推荐）  
-Install with uv (Recommended)
+### Install with uv (Recommended)
 
 ```bash
-# 从源码安装 / Install from source
+# Install from source
 uv pip install -e .
 
-# 或者直接安装 / Or install directly
+# Or install directly
 uv pip install mem-scan
 ```
 
-### 使用 pip 安装  
-Install with pip
+### Install with pip
 
 ```bash
 pip install -e .
 ```
 
-## 依赖项 Dependencies
+## Dependencies
 
-- `psutil>=5.8.0` - 系统内存监控 / For system memory monitoring
-- `pynvml>=11.0.0` - GPU 内存监控 / For GPU memory monitoring
+- `psutil>=5.8.0` - For system memory monitoring
+- `pynvml>=11.0.0` - For GPU memory monitoring
 
-## 使用方法 Usage
+## Usage
 
-### 基本用法 Basic Usage
+### Basic Usage
 
 ```bash
-# 监控 Python 脚本执行 / Monitor a Python script
+# Monitor a Python script
 mem-scan python your_script.py
 
-# 监控带参数的命令 / Monitor a Python script with arguments
+# Monitor a Python script with arguments
 mem-scan python train.py --batch-size 128 --epochs 10
 
-# 监控模型量化过程 / Monitor model quantization process
+# Monitor model quantization process
 mem-scan python -m modelopt.onnx.quantization --onnx_path=model.onnx --quantize_mode=fp8
 ```
 
-### 高级选项 Advanced Options
+### Advanced Options
 
 ```bash
-# 指定 GPU 设备 / Specify GPU device
+# Specify GPU device
 mem-scan --gpu-id 1 python eval.py
 
-# 调整监控间隔 / Set monitoring interval (seconds)
+# Set monitoring interval (seconds)
 mem-scan --interval 0.05 python train.py
 
-# 保存报告到文件 / Output report to file
+# Output report to file
 mem-scan --output memory_report.json python inference.py
 
-# 静默模式 / Quiet mode (suppress command output)
+# Quiet mode (suppress command output)
 mem-scan --quiet --output report.json python benchmark.py
 
-# 查看版本信息 / Show version info
+# Show version info
 mem-scan --version
 
-# 查看帮助信息 / Show help
+# Show help
 mem-scan --help
 ```
 
-## 输出示例 Example Output
+## Example Output
 
 ```
 Starting memory monitoring for: python train.py --batch-size 128
@@ -114,9 +97,9 @@ Host Memory Usage:
 Report saved to: memory_report.json
 ```
 
-## JSON 报告格式 JSON Report Example
+## JSON Report Example
 
-使用 `--output` 参数时会生成 JSON 格式的报告/ A report like below will be generated when using the `--output` option:
+A report like below will be generated when using the `--output` option:
 
 ```json
 {
@@ -135,57 +118,52 @@ Report saved to: memory_report.json
 }
 ```
 
-## 开发 Development
+## Development
 
-### 开发环境设置 Setup
+### Setup
 
 ```bash
-# 克隆仓库 / Clone the repository
+# Clone the repository
 git clone 
 cd mem_scan
 
-# 使用 uv 安装开发依赖 / Install dev dependencies
+# Install dev dependencies
 uv pip install -e ".[dev]"
 
-# 运行测试 / Run tests
+# Run tests
 pytest
 
-# 代码格式化 / Code format
+# Code format
 black src/ tests/
 
-# 类型检查 / Type checking
+# Type checking
 mypy src/
 ```
 
-### 构建和发布 Build & Publish
+### Build & Publish
 
 ```bash
-# 构建包 / Build package
+# Build package
 uv build
 
-# 发布到 PyPI（需配置认证）/ Publish to PyPI (authentication required)
+# Publish to PyPI (authentication required)
 uv publish
 ```
 
-## 注意事项 Notes
+## Notes
 
-1. **GPU 监控需安装 NVIDIA 驱动和 `pynvml`**  
-   GPU monitoring requires NVIDIA drivers and the `pynvml` library
+1. **GPU monitoring requires NVIDIA drivers and the `pynvml` library**
 
-2. **无 GPU 或无法初始化时，仍监控 CPU 内存**  
-   If no GPU or initialization fails, only CPU memory is monitored (with warning)
+2. **If no GPU or initialization fails, only CPU memory is monitored (with warning)**
 
-3. **过短监控间隔可能影响目标程序性能**  
-   Too small interval may impact monitored program's performance
+3. **Too small interval may impact monitored program's performance**
 
-4. **静默模式下被监控程序输出会被捕获但不显示**  
-   With `--quiet`, the command output is captured and not shown
+4. **With `--quiet`, the command output is captured and not shown**
 
-## 许可证 License
+## License
 
 MIT License
 
-## 贡献 Contributing
+## Contributing
 
-欢迎提交 Issue 和 Pull Request！  
 Contributions via issues and pull requests are welcome!
